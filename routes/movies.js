@@ -4,20 +4,23 @@ const { MoviesService } = require('../services/movies')
 const { moviesMocks } = require('../utils/mocks/movies')
 const moviesService = new MoviesService()
 function moviesApi(app) {
-  const router = express.Router();
-  app.use('/api/movies', router);
+  const router = express.Router()
+  app.use('/api/movies', router)
+
   router.get('/', async function(req, res, next) {
     const { tags } = req.query
     try {
       const movies = await moviesService.getMovies({ tags })
+      throw new Error('Mocking error')
       res.status(200).json({
         data: movies,
         message: 'movies listed'
       })
-    }catch(err) {
+    } catch (err) {
       next(err)
     }
   })
+
   router.get('/:movieId', async function(req, res, next) {
     const { movieId } = req.params
     try {
@@ -26,10 +29,11 @@ function moviesApi(app) {
         data: movie,
         message: 'Movie retrieved'
       })
-    }catch(err) {
+    } catch (err) {
       next(err)
     }
   })
+
   router.post('/', async function(req, res, next) {
     const { body: movie } = req
     try {
@@ -38,10 +42,11 @@ function moviesApi(app) {
         data: createdMovieId,
         message: 'Movie created'
       })
-    }catch(err) {
+    } catch (err) {
       next(err)
     }
   })
+
   router.put('/:movieId', async function(req, res, next) {
     const { movieId } = req.params
     const { body: movie } = req
@@ -51,10 +56,11 @@ function moviesApi(app) {
         data: updatedMovie,
         message: 'Movie modified'
       })
-    }catch(err) {
+    } catch (err) {
       next(err)
     }
   })
+
   router.delete('/:movieId', async function(req, res, next) {
     const { movieId } = req.params
     try {
@@ -63,10 +69,9 @@ function moviesApi(app) {
         data: deletedMovie,
         message: 'movie deleted'
       })
-    }catch(err) {
+    } catch (err) {
       next(err)
     }
   })
-
 }
 module.exports = moviesApi
