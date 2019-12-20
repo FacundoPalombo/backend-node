@@ -11,6 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@hapi/boom": "^8.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongodb": "^3.4.0"
