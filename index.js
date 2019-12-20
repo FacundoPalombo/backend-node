@@ -1,5 +1,5 @@
 const express = require('express')
-const app = express();
+const app = express()
 
 const { config } = require('./config/index')
 const moviesApi = require('./routes/movies')
@@ -15,7 +15,6 @@ const {
 
 app.use(express.json())
 
-
 //Routes
 moviesApi(app)
 
@@ -26,7 +25,6 @@ app.use(notFoundHandler)
 app.use(logErrors)
 app.use(wrapErrors)
 app.use(errorHandlers)
-
 
 app.listen(config.port, () => {
   console.log(`server running on http://localhost:${config.port}/`)
