@@ -1,5 +1,10 @@
 const express = require('express')
 const { MoviesService } = require('../services/movies')
+const { cacheResponse } = require('../utils/cacheResponse')
+const {
+  FIVE_MINUTES_IN_SECONDS,
+  SIXTY_MINUTES_IN_SECONDS
+} = require('../utils/time')
 
 const {
   movieIdSchema,
@@ -10,11 +15,13 @@ const {
 const { validationHandler } = require('../utils/middlewares/validationHandler')
 
 const moviesService = new MoviesService()
+
 function moviesApi(app) {
   const router = express.Router()
   app.use('/api/movies', router)
 
   router.get('/', async function(req, res, next) {
+    cacheResponse(res, FIVE_MINUTES_IN_SECONDS)
     const { tags } = req.query
     try {
       const movies = await moviesService.getMovies({ tags })
@@ -31,6 +38,7 @@ function moviesApi(app) {
     '/:movieId',
     validationHandler({ movieId: movieIdSchema }, 'params'),
     async function(req, res, next) {
+      cacheResponse(res, FIVE_MINUTES_IN_SECONDS)
       const { movieId } = req.params
       try {
         const movie = await moviesService.getMovie({ movieId })
@@ -44,10 +52,11 @@ function moviesApi(app) {
     }
   )
 
-  router.post(
-    '/', 
-  validationHandler(createMovieSchema), 
-  async function(req, res,next) {
+  router.post('/', validationHandler(createMovieSchema), async function(
+    req,
+    res,
+    next
+  ) {
     const { body: movie } = req
     try {
       const createdMovieId = await moviesService.createMovie({ movie })

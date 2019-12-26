@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "dev": "DEBUG=express:*,app:*nodemon index.js",
+    "dev": "nodemon index.js",
     "start": "NODE_ENV=production node index",
     "coverage": "nyc npm run test",
     "report": "nyc report --reporter=html && open-cli ./coverage/index.html",
