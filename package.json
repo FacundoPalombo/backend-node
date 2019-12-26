@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "dev": "nodemon index.js",
+    "dev": "DEBUG=express:*,app:*nodemon index.js",
     "start": "NODE_ENV=production node index",
     "coverage": "nyc npm run test",
-    "report": "nyc report --reporter=html && open-cli ./coverage/index.html"
+    "report": "nyc report --reporter=html && open-cli ./coverage/index.html",
+    "debug": "DEBUG=express:*,app:*npm run start",
+    "inspect": "DEBUG=express:*,app:* nodemon --inspect index"
   },
   "keywords": [],
   "author": "",

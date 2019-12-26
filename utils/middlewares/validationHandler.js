@@ -1,4 +1,5 @@
 const boom = require('@hapi/boom')
+const debug = require('debug')('app:validate')
 
 function validate(data, schema) {
   const { error } = joi.validate(data, schema)
@@ -7,7 +8,7 @@ function validate(data, schema) {
 
 function validationHandler(schema, check = 'body') {
   return function(err, req, res, next) {
-    if (err) return console.log(err)
+    if (err) return debug(err)
     const error = validate(req[check], schema)
     error ? next(boom.badRequest(error)) : next()
   }
