@@ -9,8 +9,8 @@ const {
 const { moviesMock } = require('../utils/mocks/movies')
 
 describe('services - movies', function() {
-  const MoviesServices = proxyquire('../services/movies',{ '../lib/mongo': MongoLibMock } )
-  const moviesService = new MoviesServices()
+  const { MoviesService } = proxyquire('../services/movies',{ '../lib/mongo': MongoLibMock } )
+  const moviesService = new MoviesService()
 
   describe('when getMovies method is called', async function () {
     it('should call the getAll mongoLib method', async function() {

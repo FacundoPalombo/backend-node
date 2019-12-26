@@ -8,11 +8,9 @@ const {
 const getAllStub = sinon.stub()
 getAllStub.withArgs('movies').resolves(moviesMocks)
 
-const tagQuery = {
-  tags: { tags: { $in: 'Drama '} }
-}
+const tagQuery = { tags: { $in: 'Drama'} }
 
-getAllStub.withArgs('movies', tagQuery).resolves(moviesMocks)
+getAllStub.withArgs('movies', tagQuery).resolves(filteredMoviesMock('Drama'))
 
 const createStub = sinon.stub().resolves(moviesMocks[0].id)
 
